@@ -1,7 +1,9 @@
 package com.tpe.controller;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDto;
 import com.tpe.service.StudentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String,String>> createStudent (@RequestBody Student student){
+    public ResponseEntity<Map<String,String>> createStudent (@Valid @RequestBody Student student){
 
         studentService.saveStudent(student);
         Map<String,String> response= new HashMap<>();
@@ -52,6 +54,15 @@ public class StudentController {
         response.put("message","Student is deleted successfully ");
         response.put("status","success");
         return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+    @PutMapping
+    public ResponseEntity<Map<String,String>> updateStudent(@PathVariable("id") Long id,
+                                              @Valid @RequestBody StudentDto studentDto){
+
+        Map<String, String> response= new HashMap<>();
+        response.put("message","Student is updated successfully ");
+        response.put("status","success");
+        return ResponseEntity.ok(response);
     }
 
 }
