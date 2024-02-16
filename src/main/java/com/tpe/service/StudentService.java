@@ -3,6 +3,7 @@ package com.tpe.service;
 
 import com.tpe.domain.Student;
 import com.tpe.exception.ConflictException;
+import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,16 @@ public class StudentService {
         }
         studentRepository.save(student);
 
+    }
 
+    public Student getStudentById(Long studentId) {
+        Student student=studentRepository.findById(studentId).orElseThrow(()->
+            new ResourceNotFoundException("Student not found by id" + studentId));
+        return student;
+    }
 
-
-
+    public void deleteStudent(Long id) {
+        Student student= getStudentById(id);
+        studentRepository.delete(student);
     }
 }
