@@ -6,17 +6,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/students")
 //@RequiredArgsConstructor // Kullanirsam @Autowired yazmama gerek kalmaz.
 public class StudentController {
-    @Autowired
+    @Autowired //Injection islemi yapmak icin kullaniyorum .
     private StudentService studentService;
 
 
@@ -25,6 +25,16 @@ public class StudentController {
     public ResponseEntity<List<Student>> getAllStudents(){
         List<Student> allStudent= studentService.getAllStudent();
         return new ResponseEntity<>(allStudent, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Map<String,String>> createStudent (@RequestBody Student student){
+
+        studentService.saveStudent(student);
+        Map<String,String> response= new HashMap<>();
+        response.put("message", "Students is created successfully");
+        response.put("status","success");
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
 }
