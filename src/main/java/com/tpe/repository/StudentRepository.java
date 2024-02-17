@@ -9,6 +9,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
 
     Boolean existsByEmail(String email); //Jpa Repository icinde hazir olan methodlar mevcut.
-    //Sik kullanilan methodlarin orneklerini olusturmus fakat degiskenleri degistererek bu methodlari overloading yapabiliyorum
+    //Sık kullanilan methodlarin orneklerini olusturmus fakat degiskenleri degistererek bu methodlari overloading yapabiliyorum
     //Harfler ayni olmali sadce field'lari degisterek JpaRepository'nin hazir methodlarini turetebiliyorum.
 }

@@ -6,6 +6,10 @@ import com.tpe.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +69,17 @@ public class StudentController {
         response.put("message","Student is updated successfully ");
         response.put("status","success");
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/page")
+    public ResponseEntity<Page<Student>> getAllStudentByPage
+            (@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+             @RequestParam(value = "size",required = false,defaultValue = "2") int size,
+             @RequestParam("sort") String prop,
+             @RequestParam("direction") Sort.Direction direction)
+    {
+        Pageable pageable= PageRequest.of(page,size, Sort.by(direction,prop));
+        Page<Student> studentsByPage=studentService.getAllStudentPaging(pageable);
+        return new ResponseEntity<>(studentsByPage,HttpStatus.OK);
     }
 
 }

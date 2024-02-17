@@ -7,6 +7,8 @@ import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +56,11 @@ public class StudentService {
         student.setPhoneNumber(studentDto.getPhoneNumber());
         student.setEmail(studentDto.getEmail());
         studentRepository.save(student);
+    }
+
+    public Page<Student> getAllStudentPaging(Pageable pageable) {
+
+        return studentRepository.findAll(pageable);
+
     }
 }
