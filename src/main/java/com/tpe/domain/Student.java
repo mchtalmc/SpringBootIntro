@@ -49,6 +49,8 @@ public class Student {
     // aaa@bb.com formatinda olmasini saglar. Daha detayli olmasini istersek @Email(pattern="") regexlerle yapabilirim.
     private String email;
 
+    private String phoneNumber;
+
 
     private LocalDateTime createDateTime= LocalDateTime.now();
 }
