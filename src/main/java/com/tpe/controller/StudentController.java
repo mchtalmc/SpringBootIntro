@@ -44,22 +44,22 @@ public class StudentController {
     }
 
     @GetMapping("/query")
-    //@PathParam ile yapmam gerekirse @GetMapping("/{id}) olarak almam lazim . /1 seklinde url olusur
+    //@PathVariable ile yapmam gerekirse @GetMapping("/{id}) olarak almam lazim . /1 seklinde url olusur
     //@RequestParam ile yapmam gerekirse @GetMapping(**path**) ?id=1 seklinde url olusur
     public ResponseEntity<Student> getStudentWithId(@RequestParam Long studentId){
         Student student =studentService.getStudentById(studentId);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @DeleteMapping("/id")
-    public ResponseEntity<Map<String,String>> deleteStudent(@RequestParam("id") Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String,String>> deleteStudent(@PathVariable("id") Long id){
         studentService.deleteStudent(id);
         Map<String, String> response= new HashMap<>();
         response.put("message","Student is deleted successfully ");
         response.put("status","success");
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String,String>> updateStudent(@PathVariable("id") Long id,
                                               @Valid @RequestBody StudentDto studentDto){
 
@@ -80,6 +80,12 @@ public class StudentController {
         Pageable pageable= PageRequest.of(page,size, Sort.by(direction,prop));
         Page<Student> studentsByPage=studentService.getAllStudentPaging(pageable);
         return new ResponseEntity<>(studentsByPage,HttpStatus.OK);
+    }
+
+    @GetMapping("/{grade}")
+    public ResponseEntity<List<Student>> getStudentByGrade(@PathVariable("grade") Integer grade){
+        List<Student> students=studentService.getAllStudentEqualsGrade(grade);
+        return new ResponseEntity<>(students,HttpStatus.OK);
     }
 
 }

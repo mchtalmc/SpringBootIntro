@@ -63,4 +63,8 @@ public class StudentService {
         return studentRepository.findAll(pageable);
 
     }
+
+    public List<Student> getAllStudentEqualsGrade(Integer grade) {
+        return studentRepository.findAllGradeEquals(grade);
+    }
 }
