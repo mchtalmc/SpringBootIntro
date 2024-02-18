@@ -68,12 +68,20 @@ public class StudentService {
         return studentRepository.findAllGradeEquals(grade);
     }
 
+ //   public StudentDto getStudentDtoById(Long id) {
+
+  //      Student student=getStudentById(id);
+ //       //Dto class'inda constructor ile mapleme yapmak istersem.
+ //       StudentDto studentDto=new StudentDto(student);
+ //       return studentDto;
+//
+ //   }
+
     public StudentDto getStudentDtoById(Long id) {
 
-        Student student=getStudentById(id);
-        //Dto class'inda constructor ile mapleme yapmak istersem.
-        StudentDto studentDto=new StudentDto(student);
-        return studentDto;
+       StudentDto studentDto=studentRepository.findStudentDtoById(id).orElseThrow(()->
+        new ResourceNotFoundException("Student not found by id"+ id));
+       return studentDto;
 
     }
 }

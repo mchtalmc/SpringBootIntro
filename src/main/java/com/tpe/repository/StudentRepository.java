@@ -1,12 +1,14 @@
 package com.tpe.repository;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository // Kullanmak zorunlu degil . Jpa extend ettigim icin
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -26,4 +28,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAllGradeEquals(@Param("grade") Integer grade);
 
 
+    @Query("SELECT new com.tpe.dto.StudentDto(s) FROM Student s WHERE s.id=:pId") // JPQL bize constructor kullanarak
+    //Student'i studentDto'ya mapleme islemi yaparken yolu(path'ini) tamamen vermem gerekiyor.
+    Optional<StudentDto> findStudentDtoById(@Param("pId") Long id);
 }
