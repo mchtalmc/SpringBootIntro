@@ -1,5 +1,6 @@
 package com.tpe.dto;
 
+import com.tpe.domain.Student;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,6 +36,13 @@ public class StudentDto {
 
     private String phoneNumber;
 
+    public StudentDto(Student student){
+        this.name=student.getName();
+        this.lastname=student.getLastname();
+        this.grade=student.getGrade();
+        this.email=student.getEmail();
+        this.phoneNumber=student.getPhoneNumber();
+    }
 
 
 }

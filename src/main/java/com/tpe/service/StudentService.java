@@ -67,4 +67,13 @@ public class StudentService {
     public List<Student> getAllStudentEqualsGrade(Integer grade) {
         return studentRepository.findAllGradeEquals(grade);
     }
+
+    public StudentDto getStudentDtoById(Long id) {
+
+        Student student=getStudentById(id);
+        //Dto class'inda constructor ile mapleme yapmak istersem.
+        StudentDto studentDto=new StudentDto(student);
+        return studentDto;
+
+    }
 }

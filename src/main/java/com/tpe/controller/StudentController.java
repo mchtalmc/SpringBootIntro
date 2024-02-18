@@ -88,4 +88,10 @@ public class StudentController {
         return new ResponseEntity<>(students,HttpStatus.OK);
     }
 
+    @GetMapping("/studentDto/{id}")
+    public ResponseEntity<StudentDto> getStudentDtoId(@PathVariable("id") Long id){
+        StudentDto studentDto=studentService.getStudentDtoById(id);
+        return ResponseEntity.ok(studentDto);
+    };
+
 }

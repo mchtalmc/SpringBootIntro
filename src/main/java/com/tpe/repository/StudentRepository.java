@@ -15,9 +15,13 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     //Harfler ayni olmali sadce field'lari degisterek JpaRepository'nin hazir methodlarini turetebiliyorum.
     Boolean existsByEmail(String email); //Jpa Repository icinde hazir olan methodlar mevcut.
 
+
+    //JPQL ile yazilmis sorgu
  //   @Query("FROM Student s WHERE s.grade=:pGrade")
  //   List<Student> findAllGradeEquals(@Param("grade") Integer grade);
 
+
+            //nativeQuery(SQL) ile yapilmis sorgu.
     @Query(value = "SELECT * FROM Student s WHERE s.grade=:pGrade", nativeQuery = true)
     List<Student> findAllGradeEquals(@Param("grade") Integer grade);
 
