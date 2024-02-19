@@ -1,7 +1,7 @@
 package com.tpe.repository;
 
 import com.tpe.domain.Student;
-import com.tpe.dto.StudentDto;
+import com.tpe.dto.StudentDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,17 +18,20 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Boolean existsByEmail(String email); //Jpa Repository icinde hazir olan methodlar mevcut.
 
 
-    //JPQL ile yazilmis sorgu
- //   @Query("FROM Student s WHERE s.grade=:pGrade")
- //   List<Student> findAllGradeEquals(@Param("grade") Integer grade);
+    //JPQL
+    @Query("SELECT s FROM Student s WHERE s.grade=:pGrade")
+    //   @Query("FROM Student s WHERE s.grade=:pGrade")
+    List<Student> findAllGradeEquals(@Param("pGrade") Integer grade);
 
 
-            //nativeQuery(SQL) ile yapilmis sorgu.
-    @Query(value = "SELECT * FROM Student s WHERE s.grade=:pGrade", nativeQuery = true)
-    List<Student> findAllGradeEquals(@Param("grade") Integer grade);
+    //SQL
+//    @Query(value = "SELECT * FROM student s WHERE s.grade=:pGrade",nativeQuery = true)//Student
+//    List<Student> findAllGradeEquals(@Param("pGrade") Integer grade);
 
 
-    @Query("SELECT new com.tpe.dto.StudentDto(s) FROM Student s WHERE s.id=:pId") // JPQL bize constructor kullanarak
-    //Student'i studentDto'ya mapleme islemi yaparken yolu(path'ini) tamamen vermem gerekiyor.
-    Optional<StudentDto> findStudentDtoById(@Param("pId") Long id);
+
+
+    //DB den gelen studentı DTO ya çevirerek gönderiyor
+    @Query("SELECT new com.tpe.dto.StudentDTO(s) FROM Student s WHERE s.id=:pId")
+    Optional<StudentDTO> findStudentDtoById(@Param("pId") Long id);
 }

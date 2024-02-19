@@ -2,14 +2,13 @@ package com.tpe.service;
 
 
 import com.tpe.domain.Student;
-import com.tpe.dto.StudentDto;
+import com.tpe.dto.StudentDTO;
 import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class StudentService {
         studentRepository.delete(student);
     }
 
-    public void updateStudent(Long id, StudentDto studentDto) {
+    public void updateStudent(Long id, StudentDTO studentDto) {
         Student student= getStudentById(id);
         boolean existEmail = studentRepository.existsByEmail(studentDto.getEmail());
 
@@ -77,11 +76,9 @@ public class StudentService {
 //
  //   }
 
-    public StudentDto getStudentDtoById(Long id) {
-
-       StudentDto studentDto=studentRepository.findStudentDtoById(id).orElseThrow(()->
-        new ResourceNotFoundException("Student not found by id"+ id));
-       return studentDto;
-
+    public StudentDTO getStudentDtoById(Long id) {
+        StudentDTO studentDTO=studentRepository.findStudentDtoById(id).orElseThrow(()->
+                new ResourceNotFoundException("Student not found by id: "+id));
+        return studentDTO;
     }
 }

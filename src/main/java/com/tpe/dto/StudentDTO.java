@@ -1,7 +1,6 @@
 package com.tpe.dto;
 
 import com.tpe.domain.Student;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,12 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDto {
+public class StudentDTO {
 
     @Size(min = 2, max = 25 , message = "Name '${validatedValue}' must be beetwen {min} and {max}")
     @NotBlank(message = "Name can not be space")
@@ -36,7 +34,7 @@ public class StudentDto {
 
     private String phoneNumber;
 
-    public StudentDto(Student student){
+    public StudentDTO(Student student){
         this.name=student.getName();
         this.lastname=student.getLastname();
         this.grade=student.getGrade();

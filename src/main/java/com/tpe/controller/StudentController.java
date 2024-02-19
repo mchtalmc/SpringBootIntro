@@ -1,10 +1,11 @@
 package com.tpe.controller;
 
 import com.tpe.domain.Student;
-import com.tpe.dto.StudentDto;
+import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,11 @@ import java.util.Map;
 @RequestMapping("/students")
 //@RequiredArgsConstructor // Kullanirsam @Autowired yazmama gerek kalmaz.
 public class StudentController {
+
+
+    Logger logger= LoggerFactory.getLogger(StudentController.class);
+
+
     @Autowired //Injection islemi yapmak icin kullaniyorum .
     private StudentService studentService;
 
@@ -61,7 +67,7 @@ public class StudentController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Map<String,String>> updateStudent(@PathVariable("id") Long id,
-                                              @Valid @RequestBody StudentDto studentDto){
+                                              @Valid @RequestBody StudentDTO studentDto){
 
         studentService.updateStudent(id,studentDto);
 
@@ -89,9 +95,15 @@ public class StudentController {
     }
 
     @GetMapping("/studentDto/{id}")
-    public ResponseEntity<StudentDto> getStudentDtoId(@PathVariable("id") Long id){
-        StudentDto studentDto=studentService.getStudentDtoById(id);
+    public ResponseEntity<StudentDTO> getStudentDtoId(@PathVariable("id") Long id){
+        StudentDTO studentDto=studentService.getStudentDtoById(id);
+        logger.warn("Servisten Student DTO objesi alindi." + studentDto.getName());
         return ResponseEntity.ok(studentDto);
-    };
+    }
+
+
+
+
+
 
 }
